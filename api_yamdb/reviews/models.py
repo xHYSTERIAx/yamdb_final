@@ -1,10 +1,9 @@
+from api.utils import gen_confirmation_code
+from core.models import CreatedModel
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from api.utils import gen_confirmation_code
-from core.models import CreatedModel
 from .validators import correct_year
-
 
 USER = 'user'
 MODERATOR = 'moderator'

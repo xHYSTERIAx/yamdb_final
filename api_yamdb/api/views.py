@@ -1,26 +1,22 @@
+from api.filters import TitleFilter
+from api.mixins import ListCreateDestroyViewSet
+from api.permissions import (IsAdminOrReadOnlyPermission, IsAdminPermission,
+                             ReviewOrCommentPermission)
+from api.serializers import (CategorySerializer, CommentsSerializer,
+                             GenreSerializer, ReviewSerializer,
+                             TitleWriteSerializer, TokenSerializer,
+                             UserSerializer)
+from api.utils import gen_confirmation_code, send_confirmation_code
+from django.db.models import Avg
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Avg
-
-from rest_framework import status, viewsets, filters, permissions
+from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-
-from reviews.models import User, Review, Title, Genre, Category
-from .filters import TitleFilter
-from .mixins import ListCreateDestroyViewSet
-from .permissions import (
-    IsAdminPermission, ReviewOrCommentPermission,
-    IsAdminOrReadOnlyPermission)
-from .serializers import (
-    UserSerializer, TokenSerializer, ReviewSerializer, CommentsSerializer,
-    CategorySerializer, GenreSerializer,
-    TitleWriteSerializer
-)
-from .utils import gen_confirmation_code, send_confirmation_code
+from reviews.models import Category, Genre, Review, Title, User
 
 
 class RegisterView(APIView):
@@ -131,8 +127,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     permission_classes = (ReviewOrCommentPermission, )
 
     def get_title(self):
-        title = get_object_or_404(Title, pk=self.kwargs.get('title_id'))
-        return title
+        return get_object_or_404(Title, pk=self.kwargs.get('title_id'))
 
     def get_queryset(self):
         return self.get_title().reviews.all()
@@ -150,15 +145,13 @@ class CommentsViewSet(viewsets.ModelViewSet):
     permission_classes = (ReviewOrCommentPermission, )
 
     def get_title(self):
-        title = get_object_or_404(Title, pk=self.kwargs.get('title_id'))
-        return title
+        return get_object_or_404(Title, pk=self.kwargs.get('title_id'))
 
     def get_review(self):
-        review = get_object_or_404(
+        return get_object_or_404(
             Review,
             pk=self.kwargs.get('review_id'),
             title=self.get_title())
-        return review
 
     def get_queryset(self):
         return self.get_review().comments.all()

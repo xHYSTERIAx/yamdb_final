@@ -7,8 +7,7 @@ from django.core.mail import send_mail
 def gen_confirmation_code():
     letters = string.ascii_lowercase
     key: int = 10
-    confirmation_code = ''.join(random.choice(letters) for i in range(key))
-    return confirmation_code
+    return ''.join(random.choice(letters) for i in range(key))
 
 
 def send_confirmation_code(email, confirmation_code):
