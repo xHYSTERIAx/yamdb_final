@@ -1,3 +1,5 @@
+![yamdb_workflow](https://github.com/xHYSTERIAx/yamdb_final/workflows/yamdb_workflow/badge.svg)
+
 ## REST API YamDB 
 База отзывов о фильмах, музыке и книгах
 
