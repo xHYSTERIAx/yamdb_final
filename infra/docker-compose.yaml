@@ -30,6 +30,7 @@ services:
     depends_on:
       - web
 
-volumes: 
+volumes:
+  db_value: 
   static_value:
   media_value:
